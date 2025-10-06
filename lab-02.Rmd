@@ -38,7 +38,8 @@ ggplot(data=plastic_waste, mapping = aes(x=plastic_waste_per_cap, color = contin
 ### Exercise 2
 
 ```{r plastic-waste-density}
-# insert code here
+ggplot(data=plastic_waste, mapping = aes(x=plastic_waste_per_cap, color = continent, fill = continent)) + geom_density(alpha=.2)
+#not sure why alpha is a characteristic of the plotting geom but color and fill are aesthetics. 
 ```
 
 ### Exercise 3

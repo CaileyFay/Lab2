@@ -133,9 +133,11 @@ Remove this text, and add your answer for Exercise 5 here.
 CoastalProportion <- plastic_waste %>%
   mutate(CP = coastal_pop / total_pop)
 
-ggplot(data = CoastalProportion, mapping = aes(x= CP, y=plastic_waste_per_cap, color=continent)) + geom_point() + geom_smooth()
-
-
+ggplot(data = CoastalProportion, mapping = aes(x= CP, y=plastic_waste_per_cap, color=continent)) + geom_point() + geom_smooth() +
+  labs(title= "Plastic Waste v Coastal Population Proportion",
+       subtitle= "not quite right",
+       x="Coastal Proportion",
+       y= "Plastic Waste Per Capita")
 
 ```
 

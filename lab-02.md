@@ -97,7 +97,72 @@ ggplot(data=plastic_waste, mapping = aes(x=plastic_waste_per_cap, color = contin
 Remove this text, and add your answer for Exercise 3 here.
 
 ``` r
-# insert code here
+ggplot(
+  data = plastic_waste,
+  mapping = aes(
+    x = continent,
+    y = plastic_waste_per_cap
+  )
+) +
+  geom_boxplot()
+```
+
+    ## Warning: Removed 51 rows containing non-finite outside the scale range
+    ## (`stat_boxplot()`).
+
+![](lab-02_files/figure-gfm/plastic-waste-violin-1.png)<!-- -->
+
+``` r
+geom_violin(
+  mapping = NULL,
+  data = NULL,
+  stat = "ydensity",
+  position = "dodge",
+  trim = TRUE,
+  bounds = c(-Inf, Inf),
+  quantile.colour = NULL,
+  quantile.color = NULL,
+  quantile.linetype = 0L,
+  quantile.linewidth = NULL,
+  scale = "area",
+  na.rm = FALSE,
+  orientation = NA,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
+```
+
+    ## geom_violin: na.rm = FALSE, orientation = NA, quantile_gp = list(colour = NULL, linetype = 0, linewidth = NULL)
+    ## stat_ydensity: trim = TRUE, scale = area, na.rm = FALSE, orientation = NA, bounds = c(-Inf, Inf)
+    ## position_dodge
+
+``` r
+stat_ydensity(
+  mapping = NULL,
+  data = NULL,
+  geom = "violin",
+  position = "dodge",
+  orientation = NA,
+  bw = "nrd0",
+  adjust = 1,
+  kernel = "gaussian",
+  trim = TRUE,
+  scale = "area",
+  drop = TRUE,
+  bounds = c(-Inf, Inf),
+  quantiles = c(0.25, 0.5, 0.75),
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
+```
+
+    ## geom_violin: na.rm = FALSE, orientation = NA
+    ## stat_ydensity: na.rm = FALSE, orientation = NA, bw = nrd0, adjust = 1, kernel = gaussian, trim = TRUE, scale = area, drop = TRUE, bounds = c(-Inf, Inf), quantiles = c(0.25, 0.5, 0.75)
+    ## position_dodge
+
+``` r
+#confused by this 
 ```
 
 ### Exercise 4
@@ -105,8 +170,50 @@ Remove this text, and add your answer for Exercise 3 here.
 Remove this text, and add your answer for Exercise 4 here.
 
 ``` r
-# insert code here
+ggplot(data=plastic_waste, mapping= aes(x=plastic_waste_per_cap, y=mismanaged_plastic_waste_per_cap) ) + geom_point()
 ```
+
+    ## Warning: Removed 51 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](lab-02_files/figure-gfm/plastic-waste-mismanaged-1.png)<!-- -->
+
+``` r
+ggplot(data=plastic_waste, mapping= aes(x=plastic_waste_per_cap, y=mismanaged_plastic_waste_per_cap, color=continent) ) + geom_point()
+```
+
+    ## Warning: Removed 51 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](lab-02_files/figure-gfm/plastic-waste-mismanaged-2.png)<!-- -->
+
+``` r
+ggplot(data=plastic_waste, mapping= aes(x=plastic_waste_per_cap, y=total_pop, color=continent) ) + geom_point()
+```
+
+    ## Warning: Removed 61 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](lab-02_files/figure-gfm/plastic-waste-mismanaged-3.png)<!-- -->
+
+``` r
+ggplot(
+  data = plastic_waste,
+  mapping = aes(
+    x = plastic_waste_per_cap,
+    y = total_pop, color=continent
+  )
+) +
+  geom_boxplot()
+```
+
+    ## Warning: Removed 51 rows containing missing values or values outside the scale range
+    ## (`stat_boxplot()`).
+
+    ## Warning: Removed 10 rows containing non-finite outside the scale range
+    ## (`stat_boxplot()`).
+
+![](lab-02_files/figure-gfm/plastic-waste-mismanaged-4.png)<!-- -->
 
 ``` r
 # insert code here

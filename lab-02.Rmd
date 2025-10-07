@@ -47,7 +47,53 @@ ggplot(data=plastic_waste, mapping = aes(x=plastic_waste_per_cap, color = contin
 Remove this text, and add your answer for Exercise 3 here.
 
 ```{r plastic-waste-violin}
-# insert code here
+ggplot(
+  data = plastic_waste,
+  mapping = aes(
+    x = continent,
+    y = plastic_waste_per_cap
+  )
+) +
+  geom_boxplot()
+
+geom_violin(
+  mapping = NULL,
+  data = NULL,
+  stat = "ydensity",
+  position = "dodge",
+  trim = TRUE,
+  bounds = c(-Inf, Inf),
+  quantile.colour = NULL,
+  quantile.color = NULL,
+  quantile.linetype = 0L,
+  quantile.linewidth = NULL,
+  scale = "area",
+  na.rm = FALSE,
+  orientation = NA,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
+
+stat_ydensity(
+  mapping = NULL,
+  data = NULL,
+  geom = "violin",
+  position = "dodge",
+  orientation = NA,
+  bw = "nrd0",
+  adjust = 1,
+  kernel = "gaussian",
+  trim = TRUE,
+  scale = "area",
+  drop = TRUE,
+  bounds = c(-Inf, Inf),
+  quantiles = c(0.25, 0.5, 0.75),
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
+
+#confused by this 
 ```
 
 ### Exercise 4
@@ -55,7 +101,20 @@ Remove this text, and add your answer for Exercise 3 here.
 Remove this text, and add your answer for Exercise 4 here.
 
 ```{r plastic-waste-mismanaged}
-# insert code here
+ggplot(data=plastic_waste, mapping= aes(x=plastic_waste_per_cap, y=mismanaged_plastic_waste_per_cap) ) + geom_point()
+
+ggplot(data=plastic_waste, mapping= aes(x=plastic_waste_per_cap, y=mismanaged_plastic_waste_per_cap, color=continent) ) + geom_point()
+
+ggplot(data=plastic_waste, mapping= aes(x=plastic_waste_per_cap, y=total_pop, color=continent) ) + geom_point()
+
+ggplot(
+  data = plastic_waste,
+  mapping = aes(
+    x = plastic_waste_per_cap,
+    y = total_pop, color=continent
+  )
+) +
+  geom_boxplot()
 ```
 
 ```{r plastic-waste-mismanaged-continent}

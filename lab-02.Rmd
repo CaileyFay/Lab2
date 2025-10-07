@@ -102,9 +102,13 @@ Remove this text, and add your answer for Exercise 4 here.
 
 ```{r plastic-waste-mismanaged}
 ggplot(data=plastic_waste, mapping= aes(x=plastic_waste_per_cap, y=mismanaged_plastic_waste_per_cap) ) + geom_point()
+```
 
+```{r plastic-waste-mismanaged-continent}
 ggplot(data=plastic_waste, mapping= aes(x=plastic_waste_per_cap, y=mismanaged_plastic_waste_per_cap, color=continent) ) + geom_point()
+```
 
+```{r plastic-waste-population-total}
 ggplot(data=plastic_waste, mapping= aes(x=plastic_waste_per_cap, y=total_pop, color=continent) ) + geom_point()
 
 ggplot(
@@ -117,16 +121,8 @@ ggplot(
   geom_boxplot()
 ```
 
-```{r plastic-waste-mismanaged-continent}
-# insert code here
-```
-
-```{r plastic-waste-population-total}
-# insert code here
-```
-
 ```{r plastic-waste-population-coastal}
-# insert code here
+plot()
 ```
 
 ### Exercise 5
@@ -134,7 +130,13 @@ ggplot(
 Remove this text, and add your answer for Exercise 5 here.
 
 ```{r recreate-viz}
-# insert code here
+CoastalProportion <- plastic_waste %>%
+  mutate(CP = coastal_pop / total_pop)
+
+ggplot(data = CoastalProportion, mapping = aes(x= CP, y=plastic_waste_per_cap, color=continent)) + geom_point() + geom_smooth()
+
+
+
 ```
 
 

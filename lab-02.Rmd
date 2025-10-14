@@ -28,17 +28,17 @@ df_filtered <-plastic_waste%>%
   filter(plastic_waste_per_cap < 3.5) 
 ggplot(data = df_filtered, aes(x=plastic_waste_per_cap)) + geom_density()
 
-ggplot(data=plastic_waste, mapping = aes(x=plastic_waste_per_cap, color = continent)) + geom_density()
+ggplot(data=df_filtered, mapping = aes(x=plastic_waste_per_cap, color = continent)) + geom_density()
 
-ggplot(data=plastic_waste, mapping = aes(x=plastic_waste_per_cap, color = continent, fill = continent)) + geom_density()
+ggplot(data=df_filtered, mapping = aes(x=plastic_waste_per_cap, color = continent, fill = continent)) + geom_density()
 
-ggplot(data=plastic_waste, mapping = aes(x=plastic_waste_per_cap, color = continent, fill = continent)) + geom_density(alpha=0.7)
+ggplot(data=df_filtered, mapping = aes(x=plastic_waste_per_cap, color = continent, fill = continent)) + geom_density(alpha=0.7)
 ```
 
 ### Exercise 2
 
 ```{r plastic-waste-density}
-ggplot(data=plastic_waste, mapping = aes(x=plastic_waste_per_cap, color = continent, fill = continent)) + geom_density(alpha=.2)
+ggplot(data=df_filtered, mapping = aes(x=plastic_waste_per_cap, color = continent, fill = continent)) + geom_density(alpha=.2)
 #not sure why alpha is a characteristic of the plotting geom but color and fill are aesthetics. 
 ```
 
@@ -48,7 +48,7 @@ Remove this text, and add your answer for Exercise 3 here.
 
 ```{r plastic-waste-violin}
 ggplot(
-  data = plastic_waste,
+  data = df_filtered,
   mapping = aes(
     x = continent,
     y = plastic_waste_per_cap
@@ -101,18 +101,18 @@ stat_ydensity(
 Remove this text, and add your answer for Exercise 4 here.
 
 ```{r plastic-waste-mismanaged}
-ggplot(data=plastic_waste, mapping= aes(x=plastic_waste_per_cap, y=mismanaged_plastic_waste_per_cap) ) + geom_point()
+ggplot(data=df_filtered, mapping= aes(x=plastic_waste_per_cap, y=mismanaged_plastic_waste_per_cap) ) + geom_point()
 ```
 
 ```{r plastic-waste-mismanaged-continent}
-ggplot(data=plastic_waste, mapping= aes(x=plastic_waste_per_cap, y=mismanaged_plastic_waste_per_cap, color=continent) ) + geom_point()
+ggplot(data=df_filtered, mapping= aes(x=plastic_waste_per_cap, y=mismanaged_plastic_waste_per_cap, color=continent) ) + geom_point()
 ```
 
 ```{r plastic-waste-population-total}
-ggplot(data=plastic_waste, mapping= aes(x=plastic_waste_per_cap, y=total_pop, color=continent) ) + geom_point()
+ggplot(data=df_filtered, mapping= aes(x=plastic_waste_per_cap, y=total_pop, color=continent) ) + geom_point()
 
 ggplot(
-  data = plastic_waste,
+  data = df_filtered,
   mapping = aes(
     x = plastic_waste_per_cap,
     y = total_pop, color=continent
@@ -130,7 +130,7 @@ plot()
 Remove this text, and add your answer for Exercise 5 here.
 
 ```{r recreate-viz}
-CoastalProportion <- plastic_waste %>%
+CoastalProportion <- df_filtered %>%
   mutate(CP = coastal_pop / total_pop)
 
 ggplot(data = CoastalProportion, mapping = aes(x= CP, y=plastic_waste_per_cap, color=continent)) + geom_point() + geom_smooth() +

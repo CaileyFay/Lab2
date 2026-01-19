@@ -245,21 +245,22 @@ cor(df_filtered$plastic_waste_per_cap, df_filtered$coastal_pop)
 
     ## [1] -0.1286294
 
+### Exercise 5
 
-    ### Exercise 5
+Here is my attempt. I don’t think I picked out the right “smooth”
+function, but I’ve invested as much time as I can already.
 
-    Remove this text, and add your answer for Exercise 5 here.
+``` r
+CoastalProportion <- df_filtered %>%
+  mutate(CP = coastal_pop / total_pop)
 
-
-    ``` r
-    CoastalProportion <- df_filtered %>%
-      mutate(CP = coastal_pop / total_pop)
-
-    ggplot(data = CoastalProportion, mapping = aes(x= CP, y=plastic_waste_per_cap, color=continent)) + geom_point() + geom_smooth() +
-      labs(title= "Plastic Waste v Coastal Population Proportion",
-           subtitle= "not quite right",
-           x="Coastal Proportion",
-           y= "Plastic Waste Per Capita")
+ggplot(data = CoastalProportion, 
+mapping = aes(x= CP, 
+y=plastic_waste_per_cap, 
+color=continent)) + 
+geom_point() + 
+   geom_smooth()
+```
 
     ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
 
@@ -269,4 +270,17 @@ cor(df_filtered$plastic_waste_per_cap, df_filtered$coastal_pop)
     ## Warning: Removed 10 rows containing missing values or values outside the scale range
     ## (`geom_point()`).
 
-![](lab-02_files/figure-gfm/recreate-viz-1.png)<!-- -->
+![](lab-02_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+
+``` r
+  labs(title= "Plastic Waste v Coastal Population Proportion",
+       subtitle= "not quite right",
+       x="Coastal Proportion",
+       y= "Plastic Waste Per Capita")
+```
+
+    ## <ggplot2::labels> List of 4
+    ##  $ x       : chr "Coastal Proportion"
+    ##  $ y       : chr "Plastic Waste Per Capita"
+    ##  $ title   : chr "Plastic Waste v Coastal Population Proportion"
+    ##  $ subtitle: chr "not quite right"

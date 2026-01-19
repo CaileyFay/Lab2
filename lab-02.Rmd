@@ -17,30 +17,80 @@ plastic_waste <- read.csv("data/plastic-waste.csv")
 
 ## Exercises
 
+Warm up: Top left pane is for scripts / syntax / markdown files. Bottom left is the console where you can punch in commands and R spits stuff out. Top right pane is the environment, lets you see what data files are in operation, and under the git tab you can make your way to committing changes. Bottom right pane is where you can see plots, info on how to use a particular function or package, and for accessing files. 
+
+There are 240 observations in the plastic waste dataset. 
+
 ### Exercise 1
 
-Remove this text, and add your answer for Exercise 1 here.
+To get the distribution of plastic waste per capita: 
 
 ```{r plastic-waste-continent}
+#plain old histogram of plastic waste per capita 
 ggplot(data = plastic_waste, aes(x = plastic_waste_per_cap)) +
   geom_histogram(binwidth = 0.2)
-df_filtered <-plastic_waste%>%
-  filter(plastic_waste_per_cap < 3.5) 
-ggplot(data = df_filtered, aes(x=plastic_waste_per_cap)) + geom_density()
 
-ggplot(data=df_filtered, mapping = aes(x=plastic_waste_per_cap, color = continent)) + geom_density()
+```
 
-ggplot(data=df_filtered, mapping = aes(x=plastic_waste_per_cap, color = continent, fill = continent)) + geom_density()
+To see the countries where it is > 3.5 kg/person:
+```{r}
+plastic_waste%>%
+  filter(plastic_waste_per_cap > 3.5) 
 
-ggplot(data=df_filtered, mapping = aes(x=plastic_waste_per_cap, color = continent, fill = continent)) + geom_density(alpha=0.7)
+#creating the df that filters out the outliers 
+
+df_filtered <- plastic_waste %>%
+  filter(plastic_waste_per_cap < 3.5)
+```
+1.1 Plotting the distribution of plastic waste per capita faceted by continent. 
+```{r}
+  ggplot(data = df_filtered, 
+         aes(x=plastic_waste_per_cap)) +
+ geom_histogram(binwidth = .1) +
+facet_wrap(~continent)
+
+```
+Conclusion: African and Asian counties are positively skewed, and tend to have lower plastic waste per cap than North America and Europe. Less can be said about Oceania and South America, since there are low frequencies / not a lot of countries with data points. 
+
+With density plots 
+```{r}
+ggplot(data = df_filtered, 
+       aes(x=plastic_waste_per_cap)) + 
+  geom_density()
+
+#getting fancier 
+ggplot(data=df_filtered, 
+       mapping = aes(x=plastic_waste_per_cap, 
+                     color = continent)) + 
+  geom_density()
+
+#even fancier 
+ggplot(data=df_filtered,
+       mapping = aes(x=plastic_waste_per_cap, 
+                     color = continent, 
+                     fill = continent)) + geom_density()
+
+#Better but not quite there yet 
+ggplot(data=df_filtered, 
+       mapping = aes(
+         x=plastic_waste_per_cap, 
+         color = continent, 
+         fill = continent)) + 
+  geom_density(alpha=0.7)
 ```
 
 ### Exercise 2
-
+2.1 Recreating the plots with lower alpha 
 ```{r plastic-waste-density}
-ggplot(data=df_filtered, mapping = aes(x=plastic_waste_per_cap, color = continent, fill = continent)) + geom_density(alpha=.2)
-#not sure why alpha is a characteristic of the plotting geom but color and fill are aesthetics. 
+ggplot(data=df_filtered,
+       mapping = aes(
+         x=plastic_waste_per_cap, 
+         color = continent, fill = continent)) + 
+  geom_density(alpha=.2)
 ```
+Nicer to look at. 
+
+2.2 Color and fill are aesthetics because 
 
 ### Exercise 3
 
@@ -122,7 +172,7 @@ ggplot(
 ```
 
 ```{r plastic-waste-population-coastal}
-plot()
+
 ```
 
 ### Exercise 5

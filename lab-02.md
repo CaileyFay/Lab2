@@ -15,11 +15,21 @@ plastic_waste <- read.csv("data/plastic-waste.csv")
 
 ## Exercises
 
+Warm up: Top left pane is for scripts / syntax / markdown files. Bottom
+left is the console where you can punch in commands and R spits stuff
+out. Top right pane is the environment, lets you see what data files are
+in operation, and under the git tab you can make your way to committing
+changes. Bottom right pane is where you can see plots, info on how to
+use a particular function or package, and for accessing files.
+
+There are 240 observations in the plastic waste dataset.
+
 ### Exercise 1
 
-Remove this text, and add your answer for Exercise 1 here.
+To get the distribution of plastic waste per capita:
 
 ``` r
+#plain old histogram of plastic waste per capita 
 ggplot(data = plastic_waste, aes(x = plastic_waste_per_cap)) +
   geom_histogram(binwidth = 0.2)
 ```
@@ -29,9 +39,11 @@ ggplot(data = plastic_waste, aes(x = plastic_waste_per_cap)) +
 
 ![](lab-02_files/figure-gfm/plastic-waste-continent-1.png)<!-- -->
 
+To see the countries where it is \> 3.5 kg/person:
+
 ``` r
 plastic_waste%>%
-  filter(plastic_waste_per_cap > 3.5)
+  filter(plastic_waste_per_cap > 3.5) 
 ```
 
     ##   code              entity     continent year gdp_per_cap plastic_waste_per_cap
@@ -42,55 +54,86 @@ plastic_waste%>%
     ## 1   1341465
 
 ``` r
-ggplot(data=plastic_waste, aes(x=plastic_waste_per_cap)) + geom_density()
+#creating the df that filters out the outliers 
+
+df_filtered <- plastic_waste %>%
+  filter(plastic_waste_per_cap < 3.5)
 ```
 
-    ## Warning: Removed 51 rows containing non-finite outside the scale range
-    ## (`stat_density()`).
-
-![](lab-02_files/figure-gfm/plastic-waste-continent-2.png)<!-- -->
+1.1 Plotting the distribution of plastic waste per capita faceted by
+continent.
 
 ``` r
-ggplot(data=plastic_waste, mapping = aes(x=plastic_waste_per_cap, color = continent)) + geom_density()
+  ggplot(data = df_filtered, 
+         aes(x=plastic_waste_per_cap)) +
+ geom_histogram(binwidth = .1) +
+facet_wrap(~continent)
 ```
 
-    ## Warning: Removed 51 rows containing non-finite outside the scale range
-    ## (`stat_density()`).
+![](lab-02_files/figure-gfm/unnamed-chunk-2-1.png)<!-- --> Conclusion:
+African and Asian counties are positively skewed, and tend to have lower
+plastic waste per cap than North America and Europe. Less can be said
+about Oceania and South America, since there are low frequencies / not a
+lot of countries with data points.
 
-![](lab-02_files/figure-gfm/plastic-waste-continent-3.png)<!-- -->
+With density plots
 
 ``` r
-ggplot(data=plastic_waste, mapping = aes(x=plastic_waste_per_cap, color = continent, fill = continent)) + geom_density()
+ggplot(data = df_filtered, 
+       aes(x=plastic_waste_per_cap)) + 
+  geom_density()
 ```
 
-    ## Warning: Removed 51 rows containing non-finite outside the scale range
-    ## (`stat_density()`).
-
-![](lab-02_files/figure-gfm/plastic-waste-continent-4.png)<!-- -->
+![](lab-02_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 ``` r
-ggplot(data=plastic_waste, mapping = aes(x=plastic_waste_per_cap, color = continent, fill = continent)) + geom_density(alpha=0.7)
+#getting fancier 
+ggplot(data=df_filtered, 
+       mapping = aes(x=plastic_waste_per_cap, 
+                     color = continent)) + 
+  geom_density()
 ```
 
-    ## Warning: Removed 51 rows containing non-finite outside the scale range
-    ## (`stat_density()`).
+![](lab-02_files/figure-gfm/unnamed-chunk-3-2.png)<!-- -->
 
-![](lab-02_files/figure-gfm/plastic-waste-continent-5.png)<!-- -->
+``` r
+#even fancier 
+ggplot(data=df_filtered,
+       mapping = aes(x=plastic_waste_per_cap, 
+                     color = continent, 
+                     fill = continent)) + geom_density()
+```
+
+![](lab-02_files/figure-gfm/unnamed-chunk-3-3.png)<!-- -->
+
+``` r
+#Better but not quite there yet 
+ggplot(data=df_filtered, 
+       mapping = aes(
+         x=plastic_waste_per_cap, 
+         color = continent, 
+         fill = continent)) + 
+  geom_density(alpha=0.7)
+```
+
+![](lab-02_files/figure-gfm/unnamed-chunk-3-4.png)<!-- -->
 
 ### Exercise 2
 
-``` r
-ggplot(data=plastic_waste, mapping = aes(x=plastic_waste_per_cap, color = continent, fill = continent)) + geom_density(alpha=.2)
-```
-
-    ## Warning: Removed 51 rows containing non-finite outside the scale range
-    ## (`stat_density()`).
-
-![](lab-02_files/figure-gfm/plastic-waste-density-1.png)<!-- -->
+2.1 Recreating the plots with lower alpha
 
 ``` r
-#not sure why alpha is a characteristic of the plotting geom but color and fill are aesthetics. 
+ggplot(data=df_filtered,
+       mapping = aes(
+         x=plastic_waste_per_cap, 
+         color = continent, fill = continent)) + 
+  geom_density(alpha=.2)
 ```
+
+![](lab-02_files/figure-gfm/plastic-waste-density-1.png)<!-- --> Nicer
+to look at.
+
+2.2 Color and fill are aesthetics because
 
 ### Exercise 3
 
@@ -98,7 +141,7 @@ Remove this text, and add your answer for Exercise 3 here.
 
 ``` r
 ggplot(
-  data = plastic_waste,
+  data = df_filtered,
   mapping = aes(
     x = continent,
     y = plastic_waste_per_cap
@@ -106,9 +149,6 @@ ggplot(
 ) +
   geom_boxplot()
 ```
-
-    ## Warning: Removed 51 rows containing non-finite outside the scale range
-    ## (`stat_boxplot()`).
 
 ![](lab-02_files/figure-gfm/plastic-waste-violin-1.png)<!-- -->
 
@@ -170,35 +210,29 @@ stat_ydensity(
 Remove this text, and add your answer for Exercise 4 here.
 
 ``` r
-ggplot(data=plastic_waste, mapping= aes(x=plastic_waste_per_cap, y=mismanaged_plastic_waste_per_cap) ) + geom_point()
+ggplot(data=df_filtered, mapping= aes(x=plastic_waste_per_cap, y=mismanaged_plastic_waste_per_cap) ) + geom_point()
 ```
-
-    ## Warning: Removed 51 rows containing missing values or values outside the scale range
-    ## (`geom_point()`).
 
 ![](lab-02_files/figure-gfm/plastic-waste-mismanaged-1.png)<!-- -->
 
 ``` r
-ggplot(data=plastic_waste, mapping= aes(x=plastic_waste_per_cap, y=mismanaged_plastic_waste_per_cap, color=continent) ) + geom_point()
+ggplot(data=df_filtered, mapping= aes(x=plastic_waste_per_cap, y=mismanaged_plastic_waste_per_cap, color=continent) ) + geom_point()
 ```
 
-    ## Warning: Removed 51 rows containing missing values or values outside the scale range
-    ## (`geom_point()`).
-
-![](lab-02_files/figure-gfm/plastic-waste-mismanaged-2.png)<!-- -->
+![](lab-02_files/figure-gfm/plastic-waste-mismanaged-continent-1.png)<!-- -->
 
 ``` r
-ggplot(data=plastic_waste, mapping= aes(x=plastic_waste_per_cap, y=total_pop, color=continent) ) + geom_point()
+ggplot(data=df_filtered, mapping= aes(x=plastic_waste_per_cap, y=total_pop, color=continent) ) + geom_point()
 ```
 
-    ## Warning: Removed 61 rows containing missing values or values outside the scale range
+    ## Warning: Removed 10 rows containing missing values or values outside the scale range
     ## (`geom_point()`).
 
-![](lab-02_files/figure-gfm/plastic-waste-mismanaged-3.png)<!-- -->
+![](lab-02_files/figure-gfm/plastic-waste-population-total-1.png)<!-- -->
 
 ``` r
 ggplot(
-  data = plastic_waste,
+  data = df_filtered,
   mapping = aes(
     x = plastic_waste_per_cap,
     y = total_pop, color=continent
@@ -207,30 +241,32 @@ ggplot(
   geom_boxplot()
 ```
 
-    ## Warning: Removed 51 rows containing missing values or values outside the scale range
-    ## (`stat_boxplot()`).
-
     ## Warning: Removed 10 rows containing non-finite outside the scale range
     ## (`stat_boxplot()`).
 
-![](lab-02_files/figure-gfm/plastic-waste-mismanaged-4.png)<!-- -->
-
-``` r
-# insert code here
-```
-
-``` r
-# insert code here
-```
-
-``` r
-# insert code here
-```
+![](lab-02_files/figure-gfm/plastic-waste-population-total-2.png)<!-- -->
 
 ### Exercise 5
 
 Remove this text, and add your answer for Exercise 5 here.
 
 ``` r
-# insert code here
+CoastalProportion <- df_filtered %>%
+  mutate(CP = coastal_pop / total_pop)
+
+ggplot(data = CoastalProportion, mapping = aes(x= CP, y=plastic_waste_per_cap, color=continent)) + geom_point() + geom_smooth() +
+  labs(title= "Plastic Waste v Coastal Population Proportion",
+       subtitle= "not quite right",
+       x="Coastal Proportion",
+       y= "Plastic Waste Per Capita")
 ```
+
+    ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
+
+    ## Warning: Removed 10 rows containing non-finite outside the scale range
+    ## (`stat_smooth()`).
+
+    ## Warning: Removed 10 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](lab-02_files/figure-gfm/recreate-viz-1.png)<!-- -->

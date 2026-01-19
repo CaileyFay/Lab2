@@ -88,17 +88,14 @@ ggplot(data=df_filtered,
          color = continent, fill = continent)) + 
   geom_density(alpha=.2)
 ```
-Nicer to look at. 
 
 2.2 Color and fill are aesthetics because 
 
 ### Exercise 3
-
-Remove this text, and add your answer for Exercise 3 here.
-
-```{r plastic-waste-violin}
+To do box plots
+```{r}
 ggplot(
-  data = df_filtered,
+  data = plastic_waste,
   mapping = aes(
     x = continent,
     y = plastic_waste_per_cap
@@ -106,73 +103,59 @@ ggplot(
 ) +
   geom_boxplot()
 
-geom_violin(
-  mapping = NULL,
-  data = NULL,
-  stat = "ydensity",
-  position = "dodge",
-  trim = TRUE,
-  bounds = c(-Inf, Inf),
-  quantile.colour = NULL,
-  quantile.color = NULL,
-  quantile.linetype = 0L,
-  quantile.linewidth = NULL,
-  scale = "area",
-  na.rm = FALSE,
-  orientation = NA,
-  show.legend = NA,
-  inherit.aes = TRUE
-)
+```
+3.1 Violin plots tell us more about the shape of the distribution than box plots. Box plots mainly show us how spread out the data is overall, and where the median/quartiles/outliers are. While we get more of a sense of the shape with the violin plots, we do not know where the median falls, or other specific descriptive information. 
 
-stat_ydensity(
-  mapping = NULL,
-  data = NULL,
-  geom = "violin",
-  position = "dodge",
-  orientation = NA,
-  bw = "nrd0",
-  adjust = 1,
-  kernel = "gaussian",
-  trim = TRUE,
-  scale = "area",
-  drop = TRUE,
-  bounds = c(-Inf, Inf),
-  quantiles = c(0.25, 0.5, 0.75),
-  na.rm = FALSE,
-  show.legend = NA,
-  inherit.aes = TRUE
-)
-
-#confused by this 
+```{r plastic-waste-violin}
+ggplot(
+  data= df_filtered, 
+  mapping = aes(
+    x = continent,
+    y = plastic_waste_per_cap
+  )
+) +
+  geom_violin()
 ```
 
 ### Exercise 4
 
-Remove this text, and add your answer for Exercise 4 here.
+4.1 Relationship between plastic waste per capita and mismanaged plastic waste per capita
 
 ```{r plastic-waste-mismanaged}
-ggplot(data=df_filtered, mapping= aes(x=plastic_waste_per_cap, y=mismanaged_plastic_waste_per_cap) ) + geom_point()
+ggplot(data=df_filtered, 
+       mapping= aes(
+         x=plastic_waste_per_cap, 
+         y=mismanaged_plastic_waste_per_cap) ) + geom_point()
 ```
+There is somewhat of a positive relationship between plastic waste per cap and mismanaged plastic waste per cap. As plastic waste increases, the proportion of mismanaged plastic waste also increases, however, there are some countries that have a lot of plastic waste but mismanage very little of it. 
+
+4.2: European and north american countries tend to have less mismanaged plastic waste per cap, whereas African and Asian countries appear to mismanage plastic waste more. 
 
 ```{r plastic-waste-mismanaged-continent}
-ggplot(data=df_filtered, mapping= aes(x=plastic_waste_per_cap, y=mismanaged_plastic_waste_per_cap, color=continent) ) + geom_point()
+ggplot(data=df_filtered, 
+       mapping= aes(x=plastic_waste_per_cap, 
+                    y=mismanaged_plastic_waste_per_cap, 
+                    color=continent) ) + geom_point()
 ```
-
+4.3
+Without filtering out the asian countries that have massive outlier level total populations, there isn't a massive difference based on coastal vs total population. The correlation for the total pop and plastic waste per cap is -.09, whereas it is -.12 for coastal pop and plastic waste per cap. Therefore the coastal pop / plastic waste relationalship is stronger. 
 ```{r plastic-waste-population-total}
-ggplot(data=df_filtered, mapping= aes(x=plastic_waste_per_cap, y=total_pop, color=continent) ) + geom_point()
+ggplot(data=df_filtered,
+       mapping= aes(
+         x=plastic_waste_per_cap,
+         y=total_pop, 
+         color=continent) ) + geom_point()
 
-ggplot(
-  data = df_filtered,
-  mapping = aes(
-    x = plastic_waste_per_cap,
-    y = total_pop, color=continent
-  )
-) +
-  geom_boxplot()
+ggplot(data=df_filtered,
+       mapping= aes(
+         x=plastic_waste_per_cap,
+         y=coastal_pop, 
+         color=continent) ) + geom_point()
+
+cor(df_filtered$plastic_waste_per_cap, df_filtered$total_pop)
+
+cor(df_filtered$plastic_waste_per_cap, df_filtered$coastal_pop)
 ```
-
-```{r plastic-waste-population-coastal}
-
 ```
 
 ### Exercise 5

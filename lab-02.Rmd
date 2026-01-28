@@ -42,7 +42,9 @@ plastic_waste%>%
 df_filtered <- plastic_waste %>%
   filter(plastic_waste_per_cap < 3.5)
 ```
+
 1.1 Plotting the distribution of plastic waste per capita faceted by continent. 
+
 ```{r}
   ggplot(data = df_filtered, 
          aes(x=plastic_waste_per_cap)) +
@@ -50,6 +52,7 @@ df_filtered <- plastic_waste %>%
 facet_wrap(~continent)
 
 ```
+
 Conclusion: African and Asian counties are positively skewed, and tend to have lower plastic waste per cap than North America and Europe. Less can be said about Oceania and South America, since there are low frequencies / not a lot of countries with data points. 
 
 With density plots 
@@ -93,6 +96,7 @@ ggplot(data=df_filtered,
 
 ### Exercise 3
 To do box plots
+
 ```{r}
 ggplot(
   data = plastic_waste,
@@ -104,6 +108,7 @@ ggplot(
   geom_boxplot()
 
 ```
+
 3.1 Violin plots tell us more about the shape of the distribution than box plots. Box plots mainly show us how spread out the data is overall, and where the median/quartiles/outliers are. While we get more of a sense of the shape with the violin plots, we do not know where the median falls, or other specific descriptive information. 
 
 ```{r plastic-waste-violin}
@@ -127,6 +132,7 @@ ggplot(data=df_filtered,
          x=plastic_waste_per_cap, 
          y=mismanaged_plastic_waste_per_cap) ) + geom_point()
 ```
+
 There is somewhat of a positive relationship between plastic waste per cap and mismanaged plastic waste per cap. As plastic waste increases, the proportion of mismanaged plastic waste also increases, however, there are some countries that have a lot of plastic waste but mismanage very little of it. 
 
 4.2: European and north american countries tend to have less mismanaged plastic waste per cap, whereas African and Asian countries appear to mismanage plastic waste more. 
@@ -137,6 +143,7 @@ ggplot(data=df_filtered,
                     y=mismanaged_plastic_waste_per_cap, 
                     color=continent) ) + geom_point()
 ```
+
 4.3
 Without filtering out the asian countries that have massive outlier level total populations, there isn't a massive difference based on coastal vs total population. The correlation for the total pop and plastic waste per cap is -.09, whereas it is -.12 for coastal pop and plastic waste per cap. Therefore the coastal pop / plastic waste relationalship is stronger. 
 ```{r plastic-waste-population-total}
